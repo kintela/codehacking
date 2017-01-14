@@ -25,7 +25,7 @@
     <![endif]-->
 
 
-
+@yield('styles')
 
 </head>
 
@@ -345,7 +345,7 @@
 <script src="{{asset('js/libs.js')}}"></script>
 
 
-@yield('footer')
+@yield('scripts')
 
 
 
