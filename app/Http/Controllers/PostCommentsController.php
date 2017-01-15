@@ -15,7 +15,7 @@ class PostCommentsController extends Controller
      */
     public function index()
     {
-        return "It's working";
+       return view('admin.comments.index');
     }
 
     /**
