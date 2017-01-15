@@ -17,7 +17,9 @@ class PostCommentsController extends Controller
      */
     public function index()
     {
-       return view('admin.comments.index');
+        $comments=Comment::all();
+
+        return view('admin.comments.index',compact('comments'));
     }
 
     /**
@@ -43,7 +45,7 @@ class PostCommentsController extends Controller
 
         $data=[
             'post_id'=>$request->post_id,
-            'author'=>$user->id,
+            'author'=>$user->name,
             'email'=>$user->email,
             'file'=>$user->photo->file,
             'body'=>$request->body
@@ -86,7 +88,9 @@ class PostCommentsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Comment::findOrFail($id)->update($request->all());
+
+        return redirect('/admin/comments');
     }
 
     /**
@@ -97,6 +101,6 @@ class PostCommentsController extends Controller
      */
     public function destroy($id)
     {
-        //
+
     }
 }
