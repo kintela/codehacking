@@ -74,7 +74,9 @@
                     {{$comment->body}}
 
                     @if(count($comment->replies)>0)
+
                         @foreach($comment->replies as $reply)
+
                             <!-- Nested Comment -->
                             <div id="nested-comment" class="media">
                                 <a class="pull-left" href="#">
@@ -87,21 +89,29 @@
                                     {{$reply->body}}
                                 </div>
 
-                                {!! Form::open(['method'=>'POST', 'action'=>'CommentRepliesController@createReply']) !!}
+                                <div class="comment-reply-container">
 
-                                <input type="hidden" name="comment_id" value="{{$comment->id}}">
+                                    <button class="toggle-reply btn btn-primary pull-right">Reply</button>
 
-                                <div class="form-group">
-                                    {!! Form::label('body','Reply:') !!}
-                                    {!! Form::textarea('body',null,['class'=>'form-control','rows'=>2]) !!}
+                                    <div class="comment-reply">
+                                        {!! Form::open(['method'=>'POST', 'action'=>'CommentRepliesController@createReply']) !!}
+
+                                            <input type="hidden" name="comment_id" value="{{$comment->id}}">
+
+                                            <div class="form-group">
+                                                {!! Form::label('body','Reply:') !!}
+                                                {!! Form::textarea('body',null,['class'=>'form-control','rows'=>2]) !!}
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                {!! Form::submit('submit',['class'=>'btn btn-primary']) !!}
+                                            </div>
+
+                                        {!! Form::close() !!}
+
+                                    </div>
                                 </div>
-
-
-                                <div class="form-group">
-                                    {!! Form::submit('submit',['class'=>'btn btn-primary']) !!}
-                                </div>
-
-                                {!! Form::close() !!}
                             </div>
                             <!-- End Nested Comment -->
                         @endforeach
@@ -112,5 +122,16 @@
         @endforeach
     @endif
 
+@endsection
+
+@section('scripts')
+    <script>
+        $(".comment-reply-container .toggle-reply").click(function(){
+
+            $(this).next().slideToggle("slow");
+
+        });
+    </script>
 
 @endsection
+
